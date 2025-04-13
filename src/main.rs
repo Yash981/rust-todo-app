@@ -18,6 +18,7 @@ enum Commands {
     Done { id: usize },
     Delete { id: usize },
     Clear,
+    Show {id: usize}
 }
 #[derive(Serialize, Deserialize, Debug)]
 struct Todo {
@@ -106,9 +107,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         println!("Cleared the todos");
                         Ok(())
                     }
-                    Err(_) => {println!("Having issue clearing the todos");Ok(())},
+                    Err(_) => {
+                        println!("Having issue clearing the todos");
+                        Ok(())
+                    }
                 }
             }
+        }
+        Commands::Show {id  } => {
+            let todos = load_todos("todos.json").unwrap_or_else(|_| Vec::new());
+            for todo in todos{
+                if todo.id == id{
+                    println!("Todo id: {}",id);
+                    println!("Todo Text: {}",todo.text);
+                    println!("Todo Marked: {}",todo.done);
+                    return Ok(());
+                }
+            }
+            println!("Todo with {} id doesn't exist to show",id);
+            return Ok(());
         }
     }
 }
