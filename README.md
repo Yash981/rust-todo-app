@@ -11,6 +11,7 @@ A simple and minimal Command Line Todo App built with Rust using `clap` and `ser
 - List all todos
 - Show a todo
 - Clear the todos
+- Mark items as undone
 - Data saved in `todos.json`
 
 ## 📦 Dependencies
@@ -45,6 +46,7 @@ todo done 0
 todo delete 0
 todo edit 1 "Learn advanced Rust"
 todo clear
+todo undone 0
 ```
 🛠️ Commands Reference
 
@@ -57,6 +59,7 @@ todo clear
 | ```edit <id> <text>```	   | Edit the text of a todo       |
 | ```show <id> ```	   | show the single todo       |
 | ```clear ```	   | clear all todos       |
+| ```undone <id> ```	   | Mark a todo as undone      |
 
 📂 Todos Storage
 
