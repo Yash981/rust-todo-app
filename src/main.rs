@@ -18,7 +18,9 @@ enum Commands {
     Done { id: usize },
     Delete { id: usize },
     Clear,
-    Show {id: usize}
+    Show {id: usize},
+    Edit {id:usize,text:String},
+    Undone { id: usize },
 }
 #[derive(Serialize, Deserialize, Debug)]
 struct Todo {
@@ -126,6 +128,41 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
             println!("Todo with {} id doesn't exist to show",id);
             return Ok(());
+        }
+        Commands::Edit { id, text } => {
+            let mut loadedtodos = load_todos("todos.json").unwrap_or_else(|_| Vec::new());
+            let mut edited = false;
+            for todo in loadedtodos.iter_mut(){
+                if todo.id == id{
+                    todo.text = text;
+                    edited = true;
+                    break
+                }
+            }
+            if edited {
+                println!("successfully edited the text for the {}",id);
+                save_todos(&loadedtodos, "todos.json")?;
+                return Ok(());
+            }
+            println!("ID:{} doesn't exist in todolist",id);
+            Ok(())
+
+        }
+        Commands::Undone { id } =>{
+            let mut todos = load_todos("todos.json").unwrap_or_else(|_| vec![]);
+            for todo in todos.iter_mut(){
+                if todo.id == id && !todo.done {
+                    println!("Already it is undone");
+                    return Ok(());
+                }else if todo.id == id && todo.done {
+                    todo.done = false;
+                    println!("Marked undone for todo id:{}",id);
+                    save_todos(&todos, "todos.json")?;
+                    return Ok(());
+                }
+            }
+            println!("No todo exist with id:{} in the todos",id);
+            Ok(())
         }
     }
 }
