@@ -46,6 +46,17 @@ todo delete 0
 todo edit 1 "Learn advanced Rust"
 todo clear
 ```
+🛠️ Commands Reference
+
+| Command      | Description |
+| ----------- | ----------- |
+| ```add <text>```    | Add a new todo      |
+| ```list```  | Show all todos        |
+| ```done <id>```   | Mark a todo as done        |
+| ```delete <id>```   | Delete a todo        |
+| ```edit <id> <text>```	   | Edit the text of a todo       |
+| ```show <id> ```	   | show the single todo       |
+| ```clear ```	   | clear all todos       |
 
 📂 Todos Storage
 
